@@ -25,11 +25,12 @@ body {
 }
 
 .menu {
+  position: relative;
+
   &.horizontal {
     @include background(linear-gradient(top left, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0)),
       url(../images/navy_blue.png), 
       linear-gradient(top left, #222, #444));
-    @include box-shadow(inset -10px 0px 30px 4px rgba(0, 0, 0, 1));
     display: block;
     position: fixed;
     top: 0;
@@ -42,6 +43,17 @@ body {
 
     &.opened {
       @include transform(translate3d(-300px, 0px, 0px)); 
+    }
+
+    .shadow {
+      position: absolute;
+      top: 0;
+      right: 0;
+      pointer-events: none;
+      display: block;
+      width: 0px;
+      height: 100%;
+      @include box-shadow(-10px 0px 30px 4px rgba(0, 0, 0, 1));
     }
   }
 

@@ -26,7 +26,7 @@ window.onload = () ->
 
 class Menu
   constructor: (@el, @trigger) ->
-    @closed = true
+    @closed = @el.className.match('closed')?
 
     @trigger.onclick = (event) =>
       if @closed
