@@ -25,4 +25,15 @@ window.onload = () ->
   new Menu $('.menu'), $('.menu-trigger')
 
 class Menu
-  constructor: (el, trigger) ->
+  constructor: (@el, @trigger) ->
+    @closed = true
+
+    @trigger.onclick = (event) =>
+      if @closed
+        @closed = false
+        document.body.className = document.body.className.replace('menu-closed', 'menu-opened').trim()
+        @el.className = @el.className.replace('closed', 'opened').trim()
+      else
+        @closed = true
+        document.body.className = document.body.className.replace('menu-opened', 'menu-closed').trim()
+        @el.className = @el.className.replace('opened', 'closed').trim()
