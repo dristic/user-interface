@@ -1,0 +1,21 @@
+.list {
+  display: none;
+  height: 800px;
+  overflow: hidden;
+  overflow-x: scroll;
+
+  .scroller {
+    float: left;
+
+    ul {
+      white-space: nowrap;
+
+      li {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        background: black;
+      }
+    }
+  }
+}

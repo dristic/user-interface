@@ -1,0 +1,30 @@
+body {
+  &.tray-transition {
+    @include transition(transform 500ms ease-in-out);
+  }
+
+  &.tray-closed {
+    @include transform(translate3d(0px, 0px, 0px));
+  }
+
+  &.tray-opened {
+    @include transform(translate3d(300px, 0px, 0px));
+  }
+}
+
+.tray {
+  &.horizontal {
+    display: block;
+    height: 100%;
+    position: fixed;
+    top: 0;
+  }
+
+  &.closed {
+    @include transform(translate3d(-300px, 0px, 0px));
+  }
+
+  &.opened {
+    @include transform(translate3d(-300px, 0px, 0px)); 
+  }
+}

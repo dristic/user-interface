@@ -1,39 +1,67 @@
 #= require_tree .
 
+class Selected
+  constructor: (@el) ->
+    # Nothing here
+
+  hasClass: (className) ->
+    @el.className.match(className) != -1
+
+  addClass: (classes...) ->
+    @el.className = "#{@el.className} #{className}".trim() for className in classes
+
+  removeClass: (className) ->
+    regex = new RegExp className, 'g'
+    @el.className = @el.className.replace(regex, '').trim()
+
+$ = (selector) ->
+  els = document.querySelectorAll selector
+
+  if els.length is 1
+    new Selected els[0]
+  else
+    new Selected els
+
 window.onload = () ->
-  $ = (selector) ->
-    els = document.querySelectorAll selector
+  new Tray 
+    el: $('#menu').el
+    trigger: $('#trigger').el
+    direction: Tray.left
 
-    if els.length is 1
-      els[0]
-    else
-      els
+class Tray
+  @defaults = {}
+  @left = 0
+  @right = 1
 
-  boxes = $ ".box"
-  i = -1
+  constructor: (@options) ->
+    @options[key] = Tray.defaults[key] unless @options[key] for key of Tray.defaults
 
-  removeNext = () ->
-    i = i + 1
-    box = boxes[i]
-    box?.className = "box"
+    @el = new Selected @options.el
+    @trigger = new Selected @options.trigger
 
-    if i < boxes.length
-      setTimeout removeNext, 200
+    @trigger.addClass "tray-trigger"
+    @el.addClass "tray", "horizontal", "closed"
 
-  setTimeout removeNext, 200
+    document.body.className = "#{document.body.className} tray-transition tray-closed"
 
-  new Menu $('.menu'), $('.menu-trigger')
+    @closed = @el.hasClass('closed')
 
-class Menu
-  constructor: (@el, @trigger) ->
-    @closed = @el.className.match('closed')?
-
-    @trigger.onclick = (event) =>
+    @trigger.el.onclick = (event) =>
       if @closed
         @closed = false
-        document.body.className = document.body.className.replace('menu-closed', 'menu-opened').trim()
-        @el.className = @el.className.replace('closed', 'opened').trim()
+        document.body.className = document.body.className.replace('tray-closed', 'tray-opened').trim()
+        @el.removeClass 'closed'
+        @el.addClass 'opened'
       else
         @closed = true
-        document.body.className = document.body.className.replace('menu-opened', 'menu-closed').trim()
-        @el.className = @el.className.replace('opened', 'closed').trim()
+        document.body.className = document.body.className.replace('tray-opened', 'tray-closed').trim()
+        @el.removeClass 'opened'
+        @el.addClass 'closed'
+
+class List
+  constructor: (@el) ->
+    # Nothing yet.
+
+class Popover
+  constructor: (@el) ->
+    # Nothing yet.
