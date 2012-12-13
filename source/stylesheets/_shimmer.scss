@@ -18,13 +18,29 @@ body {
     height: 100%;
     position: fixed;
     top: 0;
-  }
 
-  &.closed {
-    @include transform(translate3d(-300px, 0px, 0px));
-  }
+    &.left {
+      left: 0;
 
-  &.opened {
-    @include transform(translate3d(-300px, 0px, 0px)); 
+      &.closed {
+        @include transform(translate3d(-300px, 0px, 0px));
+      }
+
+      &.opened {
+        @include transform(translate3d(-300px, 0px, 0px)); 
+      }
+    }
+
+    &.right {
+      right: 0;
+
+      &.closed {
+        @include transform(translate3d(300px, 0px, 0px));
+      }
+
+      &.opened {
+        @include transform(translate3d(300px, 0px, 0px)); 
+      }
+    }
   }
 }
